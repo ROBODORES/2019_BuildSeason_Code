@@ -5,6 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/*
+   __ __   ___     ______    ______
+  / // /  |__ \   / ____/   / ____/
+ / // /_  __/ /  /___ \    /___ \  
+/__  __/ / __/  ____/ /   ____/ /  
+  /_/   /____/ /_____/   /_____/   
+  _____   _                ____            _                   _                             
+ |_   _| | |__     ___    |  _ \    ___   | |__     ___     __| |   ___    _ __    ___   ___ 
+   | |   | '_ \   / _ \   | |_) |  / _ \  | '_ \   / _ \   / _` |  / _ \  | '__|  / _ \ / __|
+   | |   | | | | |  __/   |  _ <  | (_) | | |_) | | (_) | | (_| | | (_) | | |    |  __/ \__ \
+   |_|   |_| |_|  \___|   |_| \_\  \___/  |_.__/   \___/   \__,_|  \___/  |_|     \___| |___/
+                                                                                             
+*/
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -28,7 +42,7 @@ import frc.robot.commands.ExampleCommand;
 //import frc.robot.commands.Drive;
 
 /**
- * The VM is configured to automasbfkjsdhlifdalfdhsftically run this class, and to call the
+ * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.gradle file in the
@@ -48,11 +62,12 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
-   * This function is run when the robot is first started up and should be
+   * This function is run when the robot is first started up and is
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
+    //Initialize Subsystems
     m_driveTrain = new DriveTrain();
     m_arm = new ArmPID();
     m_wrist = new WristPID();
@@ -65,7 +80,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
 
-    CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.getInstance().startAutomaticCapture(); // Starts the Camera Server
   }
 
   /**
