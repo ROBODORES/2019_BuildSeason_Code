@@ -55,4 +55,7 @@ public class RobotMap {
   public static final int gearSwitcher = 3;
 
   public static final int pcm_id = 4;
+
+  //LEDs
+  public static final int blinkinPort = 0;
 }

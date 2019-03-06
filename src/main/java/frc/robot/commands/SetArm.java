@@ -53,50 +53,50 @@ public class SetArm extends Command {
 
   void intakeHeight() {
     if (hatchMode) { 
-      Robot.m_arm.setSetpoint(10.0);
+      Robot.m_arm.setSetpoint(5.0);
       Robot.m_wrist.setSetpoint(90.0);
     } else {
       Robot.m_arm.setSetpoint(10.0);
       Robot.m_wrist.setSetpoint(90.0);
     }
     Robot.m_arm.enable();
-    Robot.m_arm.enable();
+    Robot.m_wrist.enable();
   }
 
   void levelOne() {
     if (hatchMode) { 
-      Robot.m_arm.setSetpoint(15.0);
+      Robot.m_arm.setSetpoint(10.0);
       Robot.m_wrist.setSetpoint(90.0);
     } else {
-      Robot.m_arm.setSetpoint(15.0);
-      Robot.m_wrist.setSetpoint(180.0);
+      Robot.m_arm.setSetpoint(20.0);
+      Robot.m_wrist.setSetpoint(200.0);
     }
     Robot.m_arm.enable();
-    Robot.m_arm.enable();
+    Robot.m_wrist.enable();
   }
 
   void levelTwo() {
     if (hatchMode) { 
-      Robot.m_arm.setSetpoint(70.0);
-      Robot.m_wrist.setSetpoint(90.0);
+      Robot.m_arm.setSetpoint(60.0);
+      Robot.m_wrist.setSetpoint(70.0);
     } else {
-      Robot.m_arm.setSetpoint(70.0);
-      Robot.m_wrist.setSetpoint(180.0);
+      Robot.m_arm.setSetpoint(75.0);
+      Robot.m_wrist.setSetpoint(185.0);
     }
     Robot.m_arm.enable();
-    Robot.m_arm.enable();
+    Robot.m_wrist.enable();
   }
 
   void levelThree() {
     if (hatchMode) { 
-      Robot.m_arm.setSetpoint(108.0);
-      Robot.m_wrist.setSetpoint(105.0);
+      Robot.m_arm.setSetpoint(90.0);
+      Robot.m_wrist.setSetpoint(65.0);
     } else {
       Robot.m_arm.setSetpoint(108.0);
       Robot.m_wrist.setSetpoint(195.0);
     }
     Robot.m_arm.enable();
-    Robot.m_arm.enable();
+    Robot.m_wrist.enable();
   }
 
   // Make this return true when this Command no longer needs to run execute()

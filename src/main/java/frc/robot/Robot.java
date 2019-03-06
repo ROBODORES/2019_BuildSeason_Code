@@ -36,13 +36,14 @@ import frc.robot.subsystems.ArmPID;
 import frc.robot.subsystems.WristPID;
 import frc.robot.subsystems.ArmIntake;
 import frc.robot.subsystems.HatchGrabber;
+import frc.robot.subsystems.LEDs;
 
 //Commands
 import frc.robot.commands.ExampleCommand;
 //import frc.robot.commands.Drive;
 
 /**
- * The VM is configured to automatically run this class, and to call the
+ * The VM is configured to automasbfkjsdhlifdalfdhsftically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.gradle file in the
@@ -55,6 +56,7 @@ public class Robot extends TimedRobot {
   public static WristPID m_wrist = null;
   public static ArmIntake m_armIntake = null;
   public static HatchGrabber m_hatchGrabber = null;
+  public static LEDs m_LEDs = null;
 
   public static OI m_oi = null;
 
@@ -62,17 +64,17 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
-   * This function is run when the robot is first started up and is
+   * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
-    //Initialize Subsystems
     m_driveTrain = new DriveTrain();
     m_arm = new ArmPID();
     m_wrist = new WristPID();
     m_armIntake = new ArmIntake();
     m_hatchGrabber = new HatchGrabber();
+    m_LEDs = new LEDs();
 
     m_oi = new OI();
 
@@ -80,7 +82,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
 
-    CameraServer.getInstance().startAutomaticCapture(); // Starts the Camera Server
+    CameraServer.getInstance().startAutomaticCapture();
   }
 
   /**
