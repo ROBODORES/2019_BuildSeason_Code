@@ -36,7 +36,7 @@ public class LEDs extends Subsystem {
   //public static double beats_per_minute_lava_palette = -0.63;
   //public static double beats_per_minute_forest_palette = -0.61;
   //public static double fire_medium = -0.59;
-  public static double fire_large = -0.57;
+  //public static double fire_large = -0.57;
   //public static double twinkles_rainbow_palette = -0.55;
   //public static double twinkles_party_palette = -0.53;
   //public static double twinkles_ocean_palette = -0.51;
@@ -95,7 +95,7 @@ public class LEDs extends Subsystem {
   //public static double both_colors_sinelon = 0.55;
   //public static double hot_pink = 0.57;
   //public static double dark_red = 0.59;
-  //public static double red = 0.61;
+  public static double red = 0.61;
   //public static double red_orange = 0.63;
   //public static double orange = 0.65;
   //public static double gold = 0.67;

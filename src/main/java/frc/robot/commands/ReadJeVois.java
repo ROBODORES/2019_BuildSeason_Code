@@ -10,23 +10,21 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class SetLEDs extends Command {
-  public SetLEDs() {
+public class ReadJeVois extends Command {
+  public ReadJeVois() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_LEDs);
+    //requires(Robot.m_jeVois);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.m_LEDs.setLEDS(Robot.m_LEDs.rainbow_rainbow_palette);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double mode = Robot.m_LEDs.both_colors_Color_Gradient;
-    Robot.m_LEDs.setLEDS(mode);
+    //Robot.m_jeVois.print();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -38,13 +36,11 @@ public class SetLEDs extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_LEDs.setLEDS(Robot.m_LEDs.red);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

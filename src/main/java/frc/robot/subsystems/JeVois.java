@@ -8,41 +8,34 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.ctre.phoenix.motorcontrol.ControlMode;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
+import frc.robot.commands.ReadJeVois;
 
 /**
  * Add your docs here.
  */
-public class ArmIntake extends Subsystem {
-  VictorSPX armIntakeMotor = null;
+public class JeVois extends Subsystem {
+  SerialPort cam = null;
 
-  public ArmIntake() {
-    armIntakeMotor = new VictorSPX(RobotMap.armIntakeMotor);
+  public JeVois() {
+    cam = new SerialPort(115200, SerialPort.Port.kMXP);
   }
 
-  public void set(double speed) {
-    armIntakeMotor.set(ControlMode.PercentOutput, speed);
-  }
-
-  public void intake() {
-    double intakeSpeed = 0.8;
-    set(-intakeSpeed);
-  }
-
-  public void expel() {
-    double expelSpeed = 0.8;
-    set(expelSpeed);
-  }
-
-  public void stop() {
-    set(0.0);
+  public void print() {
+    while(true) {
+      try {
+        System.out.println(cam.readString());
+      } catch(Exception e) {
+        System.out.println("Error");
+      }
+        Timer.delay(.005);
+      }
   }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    //setDefaultCommand(new SetArmIntake());
+    setDefaultCommand(new ReadJeVois());
   }
 }

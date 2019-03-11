@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.RobotMap;
 import frc.robot.commands.SetArm;
-import frc.robot.commands.SetHatchGrabber;
+import frc.robot.commands.SetIntake;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -52,22 +52,23 @@ public class OI {
   public static Joystick sideStick = new Joystick(RobotMap.sideStickPort);
   public static Joystick toggleSwitch = new Joystick(RobotMap.toggleSwitchPort);
 
-  JoystickButton intakeHeight = new JoystickButton(rightStick, 7);
-  JoystickButton intakeBall = new JoystickButton(rightStick, 1);
+  JoystickButton intake = new JoystickButton(rightStick, 1);
+  JoystickButton outtake = new JoystickButton(rightStick, 2);
 
+  JoystickButton intakeHeight = new JoystickButton(rightStick, 7);
   JoystickButton level1 = new JoystickButton(sideStick, 2);
   JoystickButton level2 = new JoystickButton(sideStick, 6);
   JoystickButton level3 = new JoystickButton(sideStick, 4);
 
-  JoystickButton grabHatch = new JoystickButton(sideStick, 5);
-  JoystickButton releaseHatch = new JoystickButton(sideStick, 3);
-
   public OI() {
-    intakeHeight.whenPressed(new SetArm(0));
-    level1.whenPressed(new SetArm(1));
-    level2.whenPressed(new SetArm(2));
-    level3.whenPressed(new SetArm(3));
-    grabHatch.whenPressed(new SetHatchGrabber(true));
-    releaseHatch.whenPressed(new SetHatchGrabber(false));
+    intakeHeight.whenPressed(new SetArm(SetArm.intakeLevelHeight));
+    level1.whenPressed(new SetArm(SetArm.LevelOneHeight));
+    level2.whenPressed(new SetArm(SetArm.LevelTwoHeight));
+    level3.whenPressed(new SetArm(SetArm.LevelThreeHeight));
+
+    intake.whenPressed(new SetIntake(SetIntake.intake));
+    outtake.whenPressed(new SetIntake(SetIntake.outtake));
+    intake.whenReleased(new SetIntake(SetIntake.stop));
+    outtake.whenReleased(new SetIntake(SetIntake.stop));
   }
 }

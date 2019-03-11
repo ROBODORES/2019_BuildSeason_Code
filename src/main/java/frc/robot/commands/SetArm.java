@@ -9,9 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.OI;
 
 public class SetArm extends Command {
+  public static int intakeLevelHeight = 0;
+  public static int LevelOneHeight = 1;
+  public static int LevelTwoHeight = 2;
+  public static int LevelThreeHeight = 3;
+
   int mode;
   boolean hatchMode;
 
