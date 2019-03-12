@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.RobotMap;
 import frc.robot.commands.SetArm;
 import frc.robot.commands.SetIntake;
+import frc.robot.commands.LiftUp;
+import frc.robot.commands.LiftDown;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -73,5 +75,8 @@ public class OI {
     outtake.whenPressed(new SetIntake(SetIntake.outtake));
     intake.whenReleased(new SetIntake(SetIntake.stop));
     outtake.whenReleased(new SetIntake(SetIntake.stop));
+
+    liftDown.whenPressed(new LiftDown());
+    liftUp.whenPressed(new LiftUp());
   }
 }

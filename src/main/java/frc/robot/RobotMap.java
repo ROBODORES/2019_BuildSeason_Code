@@ -54,7 +54,7 @@ public class RobotMap {
 
   //Limit Switches
   public static final int intakeHallEffect = 2;
-  public static final int liftHallEffect = 5;
+  public static final int liftHallEffect = 9;
 
   //Solenoids
   public static final int hatchSolenoid = 0;

@@ -19,23 +19,26 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class Lift extends Subsystem {
   VictorSPX liftMotor = null;
   DigitalInput liftHallEffect = null;
-  boolean isUp = true;
+  int mode = 0;
 
   public Lift() {
     liftMotor = new VictorSPX(RobotMap.liftMotor);
     liftHallEffect = new DigitalInput(RobotMap.liftHallEffect);
+    if (!limitTriggered()) {
+      mode = 1;
+    }
   }
 
   public void down() {
     double speed = 0.5;
-    if (isUp) {
+    if (mode != 2) {
       liftMotor.set(ControlMode.PercentOutput, -speed);
     }
   }
 
   public void up() {
     double speed = 0.5;
-    if (!isUp) {
+    if (mode != 0) {
       liftMotor.set(ControlMode.PercentOutput, speed);
     }
   }
@@ -49,11 +52,45 @@ public class Lift extends Subsystem {
   }
 
   public boolean topLimitTriggered() {
-    return !liftHallEffect.get();
+    boolean returnVal = false;
+
+    switch (mode) {
+      case 0:
+      if (!limitTriggered()) {
+        mode = 1;
+      }
+      break;
+      case 1:
+      if (limitTriggered()) {
+        mode = 2;
+      }
+      break;
+      case 2:
+      returnVal = true;
+      break;
+    }
+    return returnVal;
   }
 
   public boolean bottomLimitTriggered() {
-    return !liftHallEffect.get();
+    boolean returnVal = false;
+    
+    switch (mode) {
+      case 0:
+      returnVal = true;
+      break;
+      case 1:
+      if (limitTriggered()) {
+        mode = 0;
+      }
+      break;
+      case 2:
+      if (!limitTriggered()) {
+        mode = 1;
+      }
+      break;
+    }
+    return returnVal;
   }
 
   @Override
