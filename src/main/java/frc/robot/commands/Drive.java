@@ -35,6 +35,16 @@ public class Drive extends Command {
     if (Robot.m_oi.rightStick.getRawButtonReleased(RobotMap.gearSwitcherButton)) {
       Robot.m_driveTrain.switchGear();
     }
+
+    if (Robot.m_oi.leftStick.getRawButton(2)) {
+      driveStraight();
+    }
+  }
+
+  void driveStraight() {
+    double speed = 0.3;
+
+    Robot.m_driveTrain.tankDrive(speed, speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()

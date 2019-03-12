@@ -53,12 +53,15 @@ public class OI {
   public static Joystick toggleSwitch = new Joystick(RobotMap.toggleSwitchPort);
 
   JoystickButton intake = new JoystickButton(rightStick, 1);
-  JoystickButton outtake = new JoystickButton(rightStick, 2);
+  JoystickButton outtake = new JoystickButton(rightStick, 3);
 
   JoystickButton intakeHeight = new JoystickButton(rightStick, 7);
   JoystickButton level1 = new JoystickButton(sideStick, 2);
   JoystickButton level2 = new JoystickButton(sideStick, 6);
   JoystickButton level3 = new JoystickButton(sideStick, 4);
+
+  JoystickButton liftDown = new JoystickButton(sideStick, 3);
+  JoystickButton liftUp = new JoystickButton(sideStick, 5);
 
   public OI() {
     intakeHeight.whenPressed(new SetArm(SetArm.intakeLevelHeight));

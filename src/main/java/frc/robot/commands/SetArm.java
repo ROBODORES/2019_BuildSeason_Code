@@ -93,8 +93,8 @@ public class SetArm extends Command {
 
   void levelThree() {
     if (hatchMode) { 
-      Robot.m_arm.setSetpoint(90.0);
-      Robot.m_wrist.setSetpoint(65.0);
+      Robot.m_arm.setSetpoint(95.0);
+      Robot.m_wrist.setSetpoint(60.0);
     } else {
       Robot.m_arm.setSetpoint(108.0);
       Robot.m_wrist.setSetpoint(195.0);

@@ -42,13 +42,19 @@ public class RobotMap {
   public static final int armMotor = 10;
   public static final int wristMotor = 9;
   public static final int armIntakeMotor = 11;
+  public static final int liftMotor = 6;
+  public static final int intakeArmMotor = 8;
+  public static final int intakeRollerMotor = 7;
 
   //Encoder Ports
   public static final int armSourceA = 0;
   public static final int armSourceB = 1;
+  public static final int intakeSourceA = 3;
+  public static final int intakeSourceB = 4;
 
   //Limit Switches
-  public static final int armHallEffect = 2;
+  public static final int intakeHallEffect = 2;
+  public static final int liftHallEffect = 5;
 
   //Solenoids
   public static final int hatchSolenoid = 0;

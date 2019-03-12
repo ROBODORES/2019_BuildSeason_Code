@@ -29,7 +29,6 @@ public class SetIntake extends Command {
   @Override
   protected void initialize() {
     Robot.m_armIntake.stop();
-    Robot.m_hatchGrabber.set(false);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -37,21 +36,25 @@ public class SetIntake extends Command {
   protected void execute() {
     switch(state) {
       case 0:
-      Robot.m_armIntake.stop();
-      Robot.m_hatchGrabber.set(false);
+      setoStop();
       break;
       case 1:
-      Robot.m_armIntake.stop();
-      Robot.m_hatchGrabber.set(false);
+      setoIntake();
       break;
       case 2:
+      setoOuttake();
       break;
     }
   }
 
   void setoStop() {
-    Robot.m_armIntake.stop();
-    Robot.m_armIntake.stop();
+    boolean hatchMode = Robot.m_oi.toggleSwitch.getRawButton(1);
+    if (hatchMode) {
+      Robot.m_armIntake.stop();
+    } else {
+      Robot.m_armIntake.stop();
+      Robot.m_hatchGrabber.set(false);
+    }
   }
 
   void setoIntake() {
