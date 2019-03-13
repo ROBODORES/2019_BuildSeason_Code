@@ -30,16 +30,20 @@ public class Lift extends Subsystem {
   }
 
   public void down() {
-    double speed = 0.5;
+    double speed = 0.8;
     if (mode != 2) {
       liftMotor.set(ControlMode.PercentOutput, -speed);
+    } else {
+      stop();
     }
   }
 
   public void up() {
-    double speed = 0.5;
+    double speed = 0.8;
     if (mode != 0) {
       liftMotor.set(ControlMode.PercentOutput, speed);
+    } else {
+      stop();
     }
   }
 

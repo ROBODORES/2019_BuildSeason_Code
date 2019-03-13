@@ -42,9 +42,13 @@ public class Drive extends Command {
   }
 
   void driveStraight() {
-    double speed = 0.3;
+    double speed = 0.4;
 
-    Robot.m_driveTrain.tankDrive(speed, speed);
+    double leftSpeed = -Robot.m_oi.leftStick.getY();
+    double rightSpeed = -Robot.m_oi.rightStick.getY();
+    double limiter = 0.8;
+
+    Robot.m_driveTrain.tankDrive(leftSpeed*limiter+speed, rightSpeed*limiter+speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -38,6 +38,7 @@ import frc.robot.subsystems.ArmIntake;
 import frc.robot.subsystems.HatchGrabber;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.IntakePID;
 //import frc.robot.subsystems.JeVois;
 
 //Commands
@@ -60,6 +61,7 @@ public class Robot extends TimedRobot {
   public static HatchGrabber m_hatchGrabber = null;
   public static LEDs m_LEDs = null;
   public static Lift m_lift = null;
+  public static IntakePID m_intakeArm = null;
   //public static JeVois m_jeVois = null;
 
   public static OI m_oi = null;
@@ -80,6 +82,7 @@ public class Robot extends TimedRobot {
     m_hatchGrabber = new HatchGrabber();
     m_LEDs = new LEDs();
     m_lift = new Lift();
+    m_intakeArm = new IntakePID();
     //m_jeVois = new JeVois();
 
     m_oi = new OI();

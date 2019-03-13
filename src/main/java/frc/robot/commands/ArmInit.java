@@ -11,21 +11,52 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class ArmInit extends Command {
+  int step = 0;
   public ArmInit() {
     requires(Robot.m_arm);
     requires(Robot.m_wrist);
+    requires(Robot.m_intakeArm);
+    step = 0;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    step = 0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_arm.setSetpoint(30.0);
-    Robot.m_arm.enable();
+    switch (step) {
+      case 0:
+      Robot.m_intakeArm.down();
+      if (Robot.m_intakeArm.hallEffectTriggered()) {
+        Robot.m_intakeArm.stop();
+        step = 1;
+      }
+      break;
+      case 1:
+      Robot.m_intakeArm.setSetpoint(-90.0);
+      Robot.m_intakeArm.enable();
+      if (Robot.m_intakeArm.getPosition() <= -86.0) {
+        step = 2;
+      }
+      break;
+      case 2:
+      Robot.m_arm.setSetpoint(70.0);
+      Robot.m_arm.enable();
+      Robot.m_wrist.setSetpoint(90);
+      Robot.m_wrist.enable();
+      if (Robot.m_arm.getPosition() >= 66.0) {
+        step = 3;
+      }
+      break;
+      case 3:
+      Robot.m_intakeArm.setSetpoint(10.0);
+      Robot.m_intakeArm.enable();
+      break;
+    }
     /*if (Robot.m_arm.onTarget()) {
       Robot.m_wrist.setSetpoint(180);
       Robot.m_wrist.enable();

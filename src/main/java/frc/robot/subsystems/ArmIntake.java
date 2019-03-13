@@ -12,14 +12,13 @@ import frc.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-/**
- * Add your docs here.
- */
 public class ArmIntake extends Subsystem {
   VictorSPX armIntakeMotor = null;
+  VictorSPX lowerIntakeMotor = null;
 
   public ArmIntake() {
     armIntakeMotor = new VictorSPX(RobotMap.armIntakeMotor);
+    lowerIntakeMotor = new VictorSPX(RobotMap.intakeRollerMotor);
   }
 
   public void set(double speed) {
@@ -29,6 +28,8 @@ public class ArmIntake extends Subsystem {
   public void intake() {
     double intakeSpeed = 0.8;
     set(-intakeSpeed);
+    double lowerIntakeSpeed = 0.8;
+    lowerIntakeMotor.set(ControlMode.PercentOutput, intakeSpeed);
   }
 
   public void expel() {
@@ -38,6 +39,7 @@ public class ArmIntake extends Subsystem {
 
   public void stop() {
     set(0.0);
+    lowerIntakeMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override

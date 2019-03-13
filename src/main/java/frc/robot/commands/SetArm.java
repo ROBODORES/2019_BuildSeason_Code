@@ -16,6 +16,16 @@ public class SetArm extends Command {
   public static int LevelTwoHeight = 2;
   public static int LevelThreeHeight = 3;
 
+  public static double stowedPosition = 10.0;
+  public static double stowedThreshold = 6.0;
+  public static double outPosition = -70;
+  public static double outThreshold = -60;
+  public static double outOfTheWayPosition = -80;
+  public static double outOfTheWayThreshold = -75;
+
+  public static double clearThreshold = 66.0;
+  public static double clearPosition = 70.0;
+
   int mode;
   boolean hatchMode;
 
@@ -26,6 +36,7 @@ public class SetArm extends Command {
 
     requires(Robot.m_arm);
     requires(Robot.m_wrist);
+    requires(Robot.m_intakeArm);
   }
 
   // Called just before this Command runs the first time
@@ -57,14 +68,41 @@ public class SetArm extends Command {
 
   void intakeHeight() {
     if (hatchMode) { 
-      Robot.m_arm.setSetpoint(5.0);
-      Robot.m_wrist.setSetpoint(90.0);
+      if (Robot.m_intakeArm.getPosition() >= stowedThreshold) {
+        Robot.m_arm.setSetpoint(5.0);
+        Robot.m_wrist.setSetpoint(90.0);
+      } else {
+        if (Robot.m_intakeArm.getPosition() <= outOfTheWayThreshold) {
+          Robot.m_arm.setSetpoint(clearPosition);
+          Robot.m_wrist.setSetpoint(90.0);
+          if (Robot.m_arm.getPosition() >= clearThreshold) {
+            Robot.m_intakeArm.setSetpoint(stowedPosition);
+          }
+        } else {
+          Robot.m_intakeArm.setSetpoint(outOfTheWayPosition);
+        }
+      }
     } else {
-      Robot.m_arm.setSetpoint(10.0);
-      Robot.m_wrist.setSetpoint(90.0);
+      if (Robot.m_intakeArm.getPosition() <= outOfTheWayThreshold) {
+        Robot.m_arm.setSetpoint(-5.0);
+        System.out.println(Robot.m_arm.getPosition());
+        if (Robot.m_arm.getPosition() <= 12.0) {
+          Robot.m_wrist.setSetpoint(180.0);
+          Robot.m_intakeArm.setSetpoint(outPosition);
+        }
+      } else if (Robot.m_intakeArm.getPosition() <= outThreshold) {
+        Robot.m_arm.setSetpoint(0.0);
+      } else {
+        Robot.m_arm.setSetpoint(clearPosition);
+        Robot.m_wrist.setSetpoint(270.0);
+        if (Robot.m_arm.getPosition() >= clearThreshold) {
+          Robot.m_intakeArm.setSetpoint(outOfTheWayPosition);
+        }
+      }
     }
     Robot.m_arm.enable();
     Robot.m_wrist.enable();
+    Robot.m_intakeArm.enable();
   }
 
   void levelOne() {
