@@ -10,92 +10,90 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class SetIntake extends Command {
-  public static int stop = 0;
+public class SetIntakeArm extends Command {
+  public static int outOfTheAway = 0;
   public static int intake = 1;
-  public static int outtake = 2;
+  public static int stowedAway = 2;
+  public static int toTheFloor = 3;
 
-  int state;
+  int mode;
+  boolean hatchMode;
 
-  public SetIntake(int state) {
+  public SetIntakeArm(int mode) {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_intake);
-    requires(Robot.m_hatchGrabber);
 
-    this.state = state;
+    this.mode = mode;
+    hatchMode = false;
+
+    requires(Robot.m_intakeArm);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.m_intake.stop();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    switch(state) {
-      case 0:
-      setoStop();
+    hatchMode = Robot.m_oi.toggleSwitch.getRawButton(1);
+
+    switch (mode) {
+      case 0: //out of the way
+      if (hatchMode) {
+        stowedAwayPosition();
+      } else {
+        toTheFloorPosition();
+      }
       break;
-      case 1:
-      setoIntake();
+      case 1: //intake position
+      if (hatchMode) {
+        stowedAwayPosition();
+      } else {
+        intakePosition();
+      }
       break;
-      case 2:
-      setoOuttake();
+      case 2: //stow away position
+      stowedAwayPosition();
+      break;
+      case 3: //to the floor
+      toTheFloorPosition();
       break;
     }
   }
 
-  void setoStop() {
-    boolean hatchMode = Robot.m_oi.toggleSwitch.getRawButton(1);
-    if (hatchMode) {
-      Robot.m_intake.stop();
-    } else {
-      Robot.m_intake.stop();
-      Robot.m_hatchGrabber.set(false);
-    }
+  void stowedAwayPosition() {
+    Robot.m_intakeArm.setSetpoint(10.0);
+    Robot.m_intakeArm.enable();
   }
 
-  void setoIntake() {
-    boolean hatchMode = Robot.m_oi.toggleSwitch.getRawButton(1);
-    if (hatchMode) {
-      Robot.m_intake.stop();
-      Robot.m_hatchGrabber.set(true);
-    } else {
-      Robot.m_intake.intake();
-      Robot.m_hatchGrabber.set(false);
-    }
+  void intakePosition() {
+    Robot.m_intakeArm.setSetpoint(-70.0);
+    Robot.m_intakeArm.enable();
   }
 
-  void setoOuttake() {
-    boolean hatchMode = Robot.m_oi.toggleSwitch.getRawButton(1);
-    if (hatchMode) {
-      Robot.m_intake.stop();
-      Robot.m_hatchGrabber.set(false);
-    } else {
-      Robot.m_intake.expel();
-      Robot.m_hatchGrabber.set(false);
-    }
+  void toTheFloorPosition() {
+    Robot.m_intakeArm.setSetpoint(-90.0);
+    Robot.m_intakeArm.enable();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    double tolerance = 5;
+    double error = Math.abs(Robot.m_intakeArm.getSetpoint()-Robot.m_intakeArm.getPosition());
+
+    return error <= tolerance;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_intake.stop();
-    //Robot.m_hatchGrabber.set(false);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

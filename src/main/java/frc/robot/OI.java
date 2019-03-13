@@ -12,10 +12,13 @@ import java.awt.Button;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.RobotMap;
-import frc.robot.commands.SetArm;
 import frc.robot.commands.SetIntake;
 import frc.robot.commands.LiftUp;
 import frc.robot.commands.LiftDown;
+import frc.robot.commands.IntakeLevel;
+import frc.robot.commands.LevelOne;
+import frc.robot.commands.LevelTwo;
+import frc.robot.commands.LevelThree;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -66,10 +69,10 @@ public class OI {
   JoystickButton liftUp = new JoystickButton(sideStick, 5);
 
   public OI() {
-    intakeHeight.whenPressed(new SetArm(SetArm.intakeLevelHeight));
-    level1.whenPressed(new SetArm(SetArm.LevelOneHeight));
-    level2.whenPressed(new SetArm(SetArm.LevelTwoHeight));
-    level3.whenPressed(new SetArm(SetArm.LevelThreeHeight));
+    intakeHeight.whenPressed(new IntakeLevel());
+    level1.whenPressed(new LevelOne());
+    level2.whenPressed(new LevelTwo());
+    level3.whenPressed(new LevelThree());
 
     intake.whenPressed(new SetIntake(SetIntake.intake));
     outtake.whenPressed(new SetIntake(SetIntake.outtake));

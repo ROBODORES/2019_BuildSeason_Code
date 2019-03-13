@@ -26,6 +26,7 @@ public class SetArm extends Command {
 
     requires(Robot.m_arm);
     requires(Robot.m_wrist);
+    requires(Robot.m_intakeArm);
   }
 
   // Called just before this Command runs the first time
@@ -38,6 +39,11 @@ public class SetArm extends Command {
   @Override
   protected void execute() {
     hatchMode = Robot.m_oi.toggleSwitch.getRawButton(1);
+
+    if (Robot.m_intakeArm.getPosition() >= 0.0) {
+      Robot.m_intakeArm.setSetpoint(-90.0);
+      Robot.m_intakeArm.enable();
+    }
 
     switch (mode) {
       case 0:
@@ -57,7 +63,7 @@ public class SetArm extends Command {
 
   void intakeHeight() {
     if (hatchMode) { 
-      Robot.m_arm.setSetpoint(5.0);
+      Robot.m_arm.setSetpoint(10.0);
       Robot.m_wrist.setSetpoint(90.0);
     } else {
       Robot.m_arm.setSetpoint(10.0);
@@ -106,20 +112,20 @@ public class SetArm extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    double tolerance = 5;
+    double error = Math.abs(Robot.m_arm.getSetpoint()-Robot.m_arm.getPosition());
+
+    return error <= tolerance;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_arm.disable();
-    Robot.m_wrist.disable();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
