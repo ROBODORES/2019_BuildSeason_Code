@@ -13,12 +13,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.RobotMap;
 import frc.robot.commands.SetIntake;
-import frc.robot.commands.LiftUp;
-import frc.robot.commands.LiftDown;
 import frc.robot.commands.IntakeLevel;
 import frc.robot.commands.LevelOne;
 import frc.robot.commands.LevelTwo;
 import frc.robot.commands.LevelThree;
+import frc.robot.commands.LiftGo;
+import frc.robot.commands.LiftUp;
+import frc.robot.commands.SetForLift;
+import frc.robot.commands.ManualLift;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -65,8 +67,10 @@ public class OI {
   JoystickButton level2 = new JoystickButton(sideStick, 6);
   JoystickButton level3 = new JoystickButton(sideStick, 4);
 
-  JoystickButton liftDown = new JoystickButton(sideStick, 3);
-  JoystickButton liftUp = new JoystickButton(sideStick, 5);
+  JoystickButton setForLift = new JoystickButton(sideStick, 7);
+  JoystickButton liftRobot = new JoystickButton(sideStick, 3);
+  JoystickButton returnLift = new JoystickButton(sideStick, 5);
+  JoystickButton manualLift = new JoystickButton(leftStick, 6);
 
   public OI() {
     intakeHeight.whenPressed(new IntakeLevel());
@@ -79,7 +83,11 @@ public class OI {
     intake.whenReleased(new SetIntake(SetIntake.stop));
     outtake.whenReleased(new SetIntake(SetIntake.stop));
 
-    liftDown.whenPressed(new LiftDown());
-    liftUp.whenPressed(new LiftUp());
+    setForLift.whenPressed(new SetForLift());
+    liftRobot.whenPressed(new LiftGo());
+    returnLift.whenPressed(new LiftUp());
+
+    manualLift.whenPressed(new ManualLift(ManualLift.up));
+    manualLift.whenReleased(new ManualLift(ManualLift.stop));
   }
 }

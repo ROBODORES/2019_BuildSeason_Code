@@ -11,6 +11,8 @@ import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DigitalInput;
 
@@ -20,12 +22,13 @@ public class IntakeArmPID extends PIDSubsystem {
   DigitalInput intakeArmHallEffect = null;
 
   public IntakeArmPID() {
-    super("IntakeArmPID", 0.1, 0.0, 0.0);
+    super("IntakeArmPID", 0.08, 0.0, 0.0);
     setAbsoluteTolerance(0.05);
 
     getPIDController().setContinuous(false);
 
     intakeArmMotor = new VictorSPX(RobotMap.intakeArmMotor);
+    intakeArmMotor.setNeutralMode(NeutralMode.Brake);
 
     intakeArmEncoder = new Encoder(RobotMap.intakeSourceA, RobotMap.intakeSourceB);
     //intakeArmEncoder.setReverseDirection(true);
@@ -52,13 +55,13 @@ public class IntakeArmPID extends PIDSubsystem {
   protected void usePIDOutput(double output) {
     // Use output to drive your system, like a motor
     // e.g. yourMotor.set(output);
-    double limiter = 0.65;
+    double limiter = 0.5;
     if (output > limiter) {
       output = limiter;
     } else if (output < -limiter) {
       output = -limiter;
     }
-    intakeArmMotor.set(ControlMode.PercentOutput, output+0.25);
+    intakeArmMotor.set(ControlMode.PercentOutput, output);
   }
 
   public void print() {
@@ -76,6 +79,11 @@ public class IntakeArmPID extends PIDSubsystem {
 
   public void down() {
     double speed = 0.5;
+    intakeArmMotor.set(ControlMode.PercentOutput, -speed);
+  }
+
+  public void downForClimb() {
+    double speed = 0.3;
     intakeArmMotor.set(ControlMode.PercentOutput, -speed);
   }
 

@@ -9,7 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.MechanismInit;
+//import frc.robot.commands.MechanismInit;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Encoder;
@@ -22,7 +22,7 @@ public class ArmPID extends PIDSubsystem {
   Encoder armEncoder = null;
 
   public ArmPID() {
-    super("ArmPID", 0.015, 0.0, 0.0);
+    super("ArmPID", 0.02, 0.0, 0.0);
     setAbsoluteTolerance(0.05);
 
     getPIDController().setContinuous(false);
@@ -31,13 +31,13 @@ public class ArmPID extends PIDSubsystem {
 
     armEncoder = new Encoder(RobotMap.armSourceA, RobotMap.armSourceB);
     armEncoder.setReverseDirection(true);
-    armEncoder.setDistancePerPulse(90.0/326.5);
+    armEncoder.setDistancePerPulse(90.0/540.0);
   }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new MechanismInit());
+    //setDefaultCommand(new MechanismInit());
   }
 
   @Override
@@ -52,7 +52,7 @@ public class ArmPID extends PIDSubsystem {
   protected void usePIDOutput(double output) {
     // Use output to drive your system, like a motor
     // e.g. yourMotor.set(output);
-    double limiter = 0.4;
+    double limiter = 0.6;
     if (output > limiter) {
       output = limiter;
     } else if (output < -limiter) {

@@ -8,12 +8,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.CalibrateIntakeArm;
-import frc.robot.commands.LevelOne;
-import frc.robot.commands.SetIntakeArm;
 
-public class MechanismInit extends CommandGroup {
-  public MechanismInit() {
+public class SetForLift extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public SetForLift() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -31,9 +31,8 @@ public class MechanismInit extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
 
-    addSequential(new CalibrateIntakeArm());
-    addSequential(new SetIntakeArm(SetIntakeArm.toTheFloor));
-    addSequential(new LevelOne());
-    addSequential(new Stop());
+    addSequential(new LevelTwo());
+    addParallel(new LiftUp());
+    addSequential(new SetIntakeArm(SetIntakeArm.climbReady));
   }
 }

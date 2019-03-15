@@ -30,7 +30,7 @@ public class Lift extends Subsystem {
   }
 
   public void down() {
-    double speed = 0.8;
+    double speed = 1.0;
     if (mode != 2) {
       liftMotor.set(ControlMode.PercentOutput, -speed);
     } else {
@@ -39,7 +39,7 @@ public class Lift extends Subsystem {
   }
 
   public void up() {
-    double speed = 0.8;
+    double speed = 1.0;
     if (mode != 0) {
       liftMotor.set(ControlMode.PercentOutput, speed);
     } else {
@@ -95,6 +95,11 @@ public class Lift extends Subsystem {
       break;
     }
     return returnVal;
+  }
+
+  public void manualUp() {
+    double speed = 1.0;
+    liftMotor.set(ControlMode.PercentOutput, speed);
   }
 
   @Override

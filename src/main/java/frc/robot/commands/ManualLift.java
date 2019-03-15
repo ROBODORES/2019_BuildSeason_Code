@@ -9,46 +9,39 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
-public class Drive extends Command {
-  public Drive() {
+public class ManualLift extends Command {
+  public static int up = 0;
+  public static int stop = 1;
+  public static int down = 2;
+
+  int mode;
+
+  public ManualLift(int mode) {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.m_driveTrain);
+    requires(Robot.m_lift);
+
+    this.mode = mode;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.m_lift.stop();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double leftSpeed = -Robot.m_oi.leftStick.getY();
-    double rightSpeed = -Robot.m_oi.rightStick.getY();
-    double limiter = 0.9;
-
-    Robot.m_driveTrain.tankDrive(leftSpeed*limiter, rightSpeed*limiter);
-
-    if (Robot.m_oi.rightStick.getRawButtonReleased(RobotMap.gearSwitcherButton)) {
-      Robot.m_driveTrain.switchGear();
+    switch (mode) {
+      case 0:
+      Robot.m_lift.manualUp();
+      break;
+      case 1:
+      Robot.m_lift.stop();
+      break;
     }
 
-    if (Robot.m_oi.leftStick.getRawButton(2)) {
-      driveStraight();
-    }
-  }
-
-  void driveStraight() {
-    double speed = 0.4;
-
-    double leftSpeed = -Robot.m_oi.leftStick.getY();
-    double rightSpeed = -Robot.m_oi.rightStick.getY();
-    double limiter = 0.5;
-
-    Robot.m_driveTrain.tankDrive(leftSpeed*limiter+speed, rightSpeed*limiter+speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -60,7 +53,7 @@ public class Drive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_driveTrain.tankDrive(0, 0);
+    Robot.m_lift.stop();
   }
 
   // Called when another command which requires one or more of the same

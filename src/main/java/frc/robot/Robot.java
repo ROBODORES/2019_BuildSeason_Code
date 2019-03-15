@@ -43,7 +43,7 @@ import frc.robot.subsystems.IntakeArmPID;
 
 //Commands
 import frc.robot.commands.ExampleCommand;
-//import frc.robot.commands.Drive;
+import frc.robot.commands.MechanismInit;
 
 /**
  * The VM is configured to automasbfkjsdhlifdalfdhsftically run this class, and to call the
@@ -66,6 +66,8 @@ public class Robot extends TimedRobot {
 
   public static OI m_oi = null;
 
+  public static MechanismInit m_init;
+
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -87,6 +89,10 @@ public class Robot extends TimedRobot {
 
     m_oi = new OI();
 
+    m_init = new MechanismInit();
+
+    
+
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
@@ -104,6 +110,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    
   }
 
   /**
@@ -162,9 +169,11 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    if (!m_init.isCompleted()) m_init.start();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
   }
 
   /**

@@ -18,6 +18,7 @@ public class SetArm extends Command {
 
   int mode;
   boolean hatchMode;
+  boolean isOOTW = false; //is out of the way
 
   public SetArm(int mode) {
     // Use requires() here to declare subsystem dependencies
@@ -32,7 +33,6 @@ public class SetArm extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,34 +40,43 @@ public class SetArm extends Command {
   protected void execute() {
     hatchMode = Robot.m_oi.toggleSwitch.getRawButton(1);
 
-    if (Robot.m_intakeArm.getPosition() >= 0.0) {
+    isOOTW = false;
+
+    if (Robot.m_intakeArm.getPosition() < 0.0) {
       Robot.m_intakeArm.setSetpoint(-90.0);
       Robot.m_intakeArm.enable();
+      if (Robot.m_intakeArm.getPosition() < -84.0) {
+        isOOTW = true;
+      }
+    } else {
+      isOOTW = true;
     }
 
-    switch (mode) {
-      case 0:
-      intakeHeight();
-      break;
-      case 1:
-      levelOne();
-      break;
-      case 2:
-      levelTwo();
-      break;
-      case 3:
-      levelThree();
-      break;
+    if (isOOTW) {
+      switch (mode) {
+        case 0:
+        intakeHeight();
+        break;
+        case 1:
+        levelOne();
+        break;
+        case 2:
+        levelTwo();
+        break;
+        case 3:
+        levelThree();
+        break;
+      }
     }
   }
 
   void intakeHeight() {
     if (hatchMode) { 
-      Robot.m_arm.setSetpoint(10.0);
+      Robot.m_arm.setSetpoint(5.0);
       Robot.m_wrist.setSetpoint(90.0);
     } else {
-      Robot.m_arm.setSetpoint(10.0);
-      Robot.m_wrist.setSetpoint(90.0);
+      Robot.m_arm.setSetpoint(-2.0);
+      Robot.m_wrist.setSetpoint(160.0);
     }
     Robot.m_arm.enable();
     Robot.m_wrist.enable();
@@ -75,7 +84,7 @@ public class SetArm extends Command {
 
   void levelOne() {
     if (hatchMode) { 
-      Robot.m_arm.setSetpoint(10.0);
+      Robot.m_arm.setSetpoint(5.0);
       Robot.m_wrist.setSetpoint(90.0);
     } else {
       Robot.m_arm.setSetpoint(20.0);
@@ -90,7 +99,7 @@ public class SetArm extends Command {
       Robot.m_arm.setSetpoint(60.0);
       Robot.m_wrist.setSetpoint(70.0);
     } else {
-      Robot.m_arm.setSetpoint(75.0);
+      Robot.m_arm.setSetpoint(70.0);
       Robot.m_wrist.setSetpoint(185.0);
     }
     Robot.m_arm.enable();
@@ -103,7 +112,7 @@ public class SetArm extends Command {
       Robot.m_wrist.setSetpoint(60.0);
     } else {
       Robot.m_arm.setSetpoint(108.0);
-      Robot.m_wrist.setSetpoint(195.0);
+      Robot.m_wrist.setSetpoint(175.0);
     }
     Robot.m_arm.enable();
     Robot.m_wrist.enable();
@@ -112,10 +121,10 @@ public class SetArm extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    double tolerance = 5;
+    double tolerance = 15;
     double error = Math.abs(Robot.m_arm.getSetpoint()-Robot.m_arm.getPosition());
 
-    return error <= tolerance;
+    return error <= tolerance && isOOTW;
   }
 
   // Called once after isFinished returns true

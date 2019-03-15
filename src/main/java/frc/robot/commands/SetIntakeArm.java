@@ -15,6 +15,7 @@ public class SetIntakeArm extends Command {
   public static int intake = 1;
   public static int stowedAway = 2;
   public static int toTheFloor = 3;
+  public static int climbReady = 4;
 
   int mode;
   boolean hatchMode;
@@ -59,28 +60,36 @@ public class SetIntakeArm extends Command {
       case 3: //to the floor
       toTheFloorPosition();
       break;
+      case 4:
+      readyForClimb();
+      break;
     }
   }
 
   void stowedAwayPosition() {
-    Robot.m_intakeArm.setSetpoint(10.0);
+    Robot.m_intakeArm.setSetpoint(30.0);
     Robot.m_intakeArm.enable();
   }
 
   void intakePosition() {
-    Robot.m_intakeArm.setSetpoint(-70.0);
+    Robot.m_intakeArm.setSetpoint(-60.0);
     Robot.m_intakeArm.enable();
   }
 
   void toTheFloorPosition() {
-    Robot.m_intakeArm.setSetpoint(-90.0);
+    Robot.m_intakeArm.setSetpoint(-90); //-90.0);
+    Robot.m_intakeArm.enable();
+  }
+
+  void readyForClimb() {
+    Robot.m_intakeArm.setSetpoint(-20.0);
     Robot.m_intakeArm.enable();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    double tolerance = 5;
+    double tolerance = 6;
     double error = Math.abs(Robot.m_intakeArm.getSetpoint()-Robot.m_intakeArm.getPosition());
 
     return error <= tolerance;

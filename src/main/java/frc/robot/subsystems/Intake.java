@@ -26,10 +26,10 @@ public class Intake extends Subsystem {
   }
 
   public void intake() {
-    double intakeSpeed = 0.8;
+    double intakeSpeed = 0.5;
     set(-intakeSpeed);
-    double lowerIntakeSpeed = 0.8;
-    lowerIntakeMotor.set(ControlMode.PercentOutput, intakeSpeed);
+    double lowerIntakeSpeed = 0.5;
+    lowerIntakeMotor.set(ControlMode.PercentOutput, -intakeSpeed);
   }
 
   public void expel() {
