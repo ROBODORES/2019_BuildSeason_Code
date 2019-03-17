@@ -10,73 +10,38 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class SetIntake extends Command {
-  public static int stop = 0;
-  public static int intake = 1;
-  public static int outtake = 2;
+public class ManualLift extends Command {
+  public static int up = 0;
+  public static int stop = 1;
+  public static int down = 2;
 
-  int state;
+  int mode;
 
-  public SetIntake(int state) {
+  public ManualLift(int mode) {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_intake);
-    requires(Robot.m_hatchGrabber);
+    requires(Robot.m_lift);
 
-    this.state = state;
+    this.mode = mode;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.m_intake.stop();
+    Robot.m_lift.stop();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    switch(state) {
+    switch (mode) {
       case 0:
-      setoStop();
+      Robot.m_lift.manualUp();
       break;
       case 1:
-      setoIntake();
-      break;
-      case 2:
-      setoOuttake();
+      Robot.m_lift.stop();
       break;
     }
-  }
 
-  void setoStop() {
-    boolean hatchMode = Robot.m_oi.toggleSwitch.getRawButton(1);
-    if (hatchMode) {
-      Robot.m_intake.stop();
-    } else {
-      Robot.m_intake.stop();
-      Robot.m_hatchGrabber.set(false);
-    }
-  }
-
-  void setoIntake() {
-    boolean hatchMode = Robot.m_oi.toggleSwitch.getRawButton(1);
-    if (hatchMode) {
-      Robot.m_intake.stop();
-      Robot.m_hatchGrabber.set(true);
-    } else {
-      Robot.m_intake.intake();
-      Robot.m_hatchGrabber.set(false);
-    }
-  }
-
-  void setoOuttake() {
-    boolean hatchMode = Robot.m_oi.toggleSwitch.getRawButton(1);
-    if (hatchMode) {
-      Robot.m_intake.stop();
-      Robot.m_hatchGrabber.set(false);
-    } else {
-      Robot.m_intake.expel();
-      Robot.m_hatchGrabber.set(false);
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -88,8 +53,7 @@ public class SetIntake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_intake.stop();
-    //Robot.m_hatchGrabber.set(false);
+    Robot.m_lift.stop();
   }
 
   // Called when another command which requires one or more of the same

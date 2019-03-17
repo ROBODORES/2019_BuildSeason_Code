@@ -9,13 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
-public class Drive extends Command {
-  public Drive() {
+public class CalibrateIntakeArm extends Command {
+  public CalibrateIntakeArm() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.m_driveTrain);
+    requires(Robot.m_intakeArm);
   }
 
   // Called just before this Command runs the first time
@@ -26,47 +24,26 @@ public class Drive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double leftSpeed = -Robot.m_oi.leftStick.getY();
-    double rightSpeed = -Robot.m_oi.rightStick.getY();
-    double limiter = 0.9;
-
-    Robot.m_driveTrain.tankDrive(leftSpeed*limiter, rightSpeed*limiter);
-
-    if (Robot.m_oi.rightStick.getRawButtonReleased(RobotMap.gearSwitcherButton)) {
-      Robot.m_driveTrain.switchGear();
-    }
-
-    if (Robot.m_oi.leftStick.getRawButton(2)) {
-      driveStraight();
-    }
-  }
-
-  void driveStraight() {
-    double speed = 0.4;
-
-    double leftSpeed = -Robot.m_oi.leftStick.getY();
-    double rightSpeed = -Robot.m_oi.rightStick.getY();
-    double limiter = 0.5;
-
-    Robot.m_driveTrain.tankDrive(leftSpeed*limiter+speed, rightSpeed*limiter+speed);
+    Robot.m_intakeArm.down();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.m_intakeArm.hallEffectTriggered();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_driveTrain.tankDrive(0, 0);
+    Robot.m_intakeArm.stop();
+    Robot.m_intakeArm.resetEncoder();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
+    Robot.m_intakeArm.stop();
   }
 }

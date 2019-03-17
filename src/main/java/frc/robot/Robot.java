@@ -34,17 +34,19 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ArmPID;
 import frc.robot.subsystems.WristPID;
-import frc.robot.subsystems.ArmIntake;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.HatchGrabber;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Lift;
-//import frc.robot.subsystems.JeVois;
+import frc.robot.subsystems.IntakeArmPID;
+import frc.robot.subsystems.JeVois;
 
 //Commands
 import frc.robot.commands.ExampleCommand;
-//import frc.robot.commands.Drive;
+import frc.robot.commands.MechanismInit;
 
 /**
+ *                                   v JAMES!!!!!
  * The VM is configured to automasbfkjsdhlifdalfdhsftically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
@@ -56,13 +58,16 @@ public class Robot extends TimedRobot {
   public static DriveTrain m_driveTrain = null;
   public static ArmPID m_arm = null;
   public static WristPID m_wrist = null;
-  public static ArmIntake m_armIntake = null;
+  public static Intake m_intake = null;
   public static HatchGrabber m_hatchGrabber = null;
   public static LEDs m_LEDs = null;
   public static Lift m_lift = null;
-  //public static JeVois m_jeVois = null;
+  public static IntakeArmPID m_intakeArm = null;
+  public static JeVois m_jeVois = null;
 
   public static OI m_oi = null;
+
+  public static MechanismInit m_init;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -76,13 +81,18 @@ public class Robot extends TimedRobot {
     m_driveTrain = new DriveTrain();
     m_arm = new ArmPID();
     m_wrist = new WristPID();
-    m_armIntake = new ArmIntake();
+    m_intake = new Intake();
     m_hatchGrabber = new HatchGrabber();
     m_LEDs = new LEDs();
     m_lift = new Lift();
-    //m_jeVois = new JeVois();
+    m_intakeArm = new IntakeArmPID();
+    m_jeVois = new JeVois();
 
     m_oi = new OI();
+
+    m_init = new MechanismInit();
+
+    
 
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -101,6 +111,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    
   }
 
   /**
@@ -159,9 +170,11 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    if (!m_init.isCompleted()) m_init.start();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
   }
 
   /**
