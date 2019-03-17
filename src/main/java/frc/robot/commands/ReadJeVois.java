@@ -13,7 +13,7 @@ import frc.robot.Robot;
 public class ReadJeVois extends Command {
   public ReadJeVois() {
     // Use requires() here to declare subsystem dependencies
-    //requires(Robot.m_jeVois);
+    requires(Robot.m_jeVois);
   }
 
   // Called just before this Command runs the first time
@@ -24,7 +24,7 @@ public class ReadJeVois extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Robot.m_jeVois.print();
+    Robot.m_jeVois.print();
   }
 
   // Make this return true when this Command no longer needs to run execute()

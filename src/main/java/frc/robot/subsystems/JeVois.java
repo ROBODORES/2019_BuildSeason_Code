@@ -23,14 +23,11 @@ public class JeVois extends Subsystem {
   }
 
   public void print() {
-    while(true) {
-      try {
-        System.out.println(cam.readString());
-      } catch(Exception e) {
-        System.out.println("Error");
-      }
-        Timer.delay(.005);
-      }
+    try {
+      System.out.println(cam.readString());
+    } catch(Exception e) {
+      System.out.println("Error");
+    }
   }
 
   @Override

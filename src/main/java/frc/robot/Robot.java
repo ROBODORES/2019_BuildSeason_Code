@@ -39,13 +39,14 @@ import frc.robot.subsystems.HatchGrabber;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.IntakeArmPID;
-//import frc.robot.subsystems.JeVois;
+import frc.robot.subsystems.JeVois;
 
 //Commands
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.MechanismInit;
 
 /**
+ *                                   v JAMES!!!!!
  * The VM is configured to automasbfkjsdhlifdalfdhsftically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
@@ -62,7 +63,7 @@ public class Robot extends TimedRobot {
   public static LEDs m_LEDs = null;
   public static Lift m_lift = null;
   public static IntakeArmPID m_intakeArm = null;
-  //public static JeVois m_jeVois = null;
+  public static JeVois m_jeVois = null;
 
   public static OI m_oi = null;
 
@@ -85,7 +86,7 @@ public class Robot extends TimedRobot {
     m_LEDs = new LEDs();
     m_lift = new Lift();
     m_intakeArm = new IntakeArmPID();
-    //m_jeVois = new JeVois();
+    m_jeVois = new JeVois();
 
     m_oi = new OI();
 

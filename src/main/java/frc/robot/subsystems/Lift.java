@@ -99,7 +99,9 @@ public class Lift extends Subsystem {
 
   public void manualUp() {
     double speed = 1.0;
-    liftMotor.set(ControlMode.PercentOutput, speed);
+    if (!limitTriggered()) {
+      liftMotor.set(ControlMode.PercentOutput, speed);
+    }
   }
 
   @Override
